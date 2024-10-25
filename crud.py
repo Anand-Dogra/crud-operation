@@ -15,7 +15,7 @@ try:
 except:
     print("connection lost")
 
-#step2 created Database--->
+#step2 creating Database--->
 
 # mycursor.execute("create database crud_python")
 # conn.commit()
@@ -49,11 +49,13 @@ myresult=mycursor.fetchall()
 # print(myresult)
 for x in myresult:
     print(x)
+
 #update data in table---->
-# mycursor.execute("update customer set age=14 where id=1")
-# conn.commit()
-# print("updated")
+ mycursor.execute("update customer set age=14 where id=1")
+ conn.commit()
+ print("updated")
+
 #delete a table a from the table--->
-# mycursor.execute("delete from customer where id=1")
-# conn.commit()
-# print("record deleted")
+ mycursor.execute("delete from customer where id=1")
+ conn.commit()
+ print("record deleted")
