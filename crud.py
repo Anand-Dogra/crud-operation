@@ -1,55 +1,59 @@
+#crud opertaions--->
+
 import mysql.connector
-from mysql.connector import Error
 
-def create_connection():
-    """Create a database connection."""
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host='127.0.0.1',
-            user='root',  # Replace with your MySQL username
-            password='Anand@123',  # Replace with your MySQL password
-            database='test_python'  # Update to your database name
-        )
-        print("Connection to MySQL DB successful")
-    except Error as e:
-        print(f"The error '{e}' occurred")
-    return connection
+#connect to Mysql connector--->
+try:
+    conn=mysql.connector.connect(
+     host="127.0.0.1",
+     user="root",
+     password="Anand@123",
+     database="crud_python"
+    )
+    mycursor=conn.cursor()
+    print("connection Established")
+except:
+    print("connection lost")
 
-def create_customer(connection, name, email, age):
-    """Create a new user."""
-    query = "INSERT INTO customer (name, email, age) VALUES (%s, %s, %s)"
-    cursor = connection.cursor()
-    cursor.execute(query, (name, email, age))
-    connection.commit()
-    cursor.close()
-    print("customer created successfully")
+#step2 created Database--->
 
-# # Example usage
-if __name__ == "__main__":
-    conn = create_connection()
-if conn:  # Ensure the connection was successful
-        # Adding the users
-        customer = [
-            ("Anand", "Anand@gmail.com", 24),
-            ("Ashwani", "Ashwani@gmail.com", 25)
-        ]
-        
-        for customer in customer:
-            create_customer(conn, customer[0], customer[1], customer[2])
-        conn.close()
+# mycursor.execute("create database crud_python")
+# conn.commit()
 
-       
-    
-#     if conn:  # Ensure the connection was successful
-#         # Adding the users
-#         users = [
-#             ("Anand", "Anand@gmail.com", 24),
-#             ("Ashwani", "Ashwani@gmail.com", 25)
-#         ]
-        
-#         for user in users:
-#             create_user(conn, user[0], user[1], user[2])
-        
-        # Close the connection when done
-        # conn.close()
+print("database created")
+#creating a table---->
+# mycursor.execute(
+#     """
+#     CREATE TABLE customer(
+#     id INTEGER PRIMARY KEY,
+#     name VARCHAR(50)NOT NULL,
+#     email VARCHAR(50)NOT NULL,
+#     age INTEGER
+#     )"""
+# )
+# conn.commit()
+print("Table is created")
+
+#step4 insert a new record to customer table------>
+# mycursor.execute(
+# """
+#    INSERT INTO customer VALUES
+#    (1,"ayush","Ayush@gmail.com",30),
+#    (2,"Anand","Anand@gmail.com",24),
+#    (3,"Ashwani","Ashwani@gmail.com",25)
+# """)
+# conn.commit()
+#Step5 read Data from the Table---->
+mycursor.execute("select * from customer")
+myresult=mycursor.fetchall()
+# print(myresult)
+for x in myresult:
+    print(x)
+#update data in table---->
+# mycursor.execute("update customer set age=14 where id=1")
+# conn.commit()
+# print("updated")
+#delete a table a from the table--->
+# mycursor.execute("delete from customer where id=1")
+# conn.commit()
+# print("record deleted")
